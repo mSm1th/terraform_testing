@@ -8,6 +8,7 @@ By doing so, you can be more confidfdent in your code/infrastructure.
 ## Static Testing/Analysis
 
 **What is Static testing?**
+
 Static testing is a software testing technique by which we can check the defects in software 
 without actually executing it. 
 
@@ -20,8 +21,8 @@ What are the benifits of static testing/analysis
 
 
 **Tools:**
-- Terraform.
 
+- Terraform.
 In our case, for our static analysis we will make use of a native Terraform command - `terraform validate`.
 This will allow for a quick check to make sure you have not made a silly mistake with spelling, missing a braket, or what I
 believe to be more useful; checking for unused variables.
@@ -32,6 +33,7 @@ All you will need to do here is run your terraform validate command in your code
 A common exaple for errors that can be easily found is duplication. Within the static_analysis section I have copied some code from the TF website.
 
 I have followed a standard of creating a `proivider.tf` file to store any provider information:
+
 
 ```yaml
 provider "aws" {
@@ -56,7 +58,6 @@ A default (non-aliased) provider configuration for "aws" was already given at
 main.tf:3,1-15. If multiple configurations are required, set the "alias"
 argument for alternative configurations.
 ```
-
 
 
 **Pre-requirments:** 
