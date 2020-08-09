@@ -33,7 +33,7 @@ A common exaple for errors that can be easily found is duplication. Within the s
 
 I have followed a standard of creating a `proivider.tf` file to store any provider information:
 
-``` hcl
+```yaml
 provider "aws" {
   access_key = var.AWS_ACCESS_KEY_ID
   secret_key = var.AWS_SECRET_ACCESS_KEY
