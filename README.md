@@ -1,7 +1,7 @@
 # terraform_testing
 A repo to demonstrate testing within Terraform. Within this page we will look at several classifications of testing.
 While some of these definitions may be disputed, it is important to take the value from each of the sections. 
-By doing so, you can be more confidfdent in your code/infrastructure.
+By doing so, you can be more confident in your code/infrastructure.
 
 
 
@@ -13,7 +13,7 @@ Static testing is a software testing technique by which we can check the defects
 without actually executing it. 
 
 
-What are the benifits of static testing/analysis
+What are the benefits of static testing/analysis
 - Fast.
 - Stable.
 - No need to deploy resources.
@@ -24,13 +24,13 @@ What are the benifits of static testing/analysis
 
 - Terraform.
 In our case, for our static analysis we will make use of a native Terraform command - `terraform validate`.
-This will allow for a quick check to make sure you have not made a silly mistake with spelling, missing a braket, or what I
+This will allow for a quick check to make sure you have not made a silly mistake with spelling, missing a bracket, or what I
 believe to be more useful; checking for unused variables.
 
 All you will need to do here is run your terraform validate command in your code DIR.
 `terraform validate -json`
 
-A common exaple for errors that can be easily found is duplication. Within the static_analysis section I have copied some code from the TF website.
+A common example for errors that can be easily found is duplication. Within the static_analysis section I have copied some code from the TF website.
 
 I have followed a standard of creating a `proivider.tf` file to store any provider information:
 
@@ -60,7 +60,7 @@ argument for alternative configurations.
 ```
 
 
-**Pre-requirments:** 
+**Pre-requirements:** 
 - Just have TF installed.
 
 **Links:**
@@ -71,26 +71,109 @@ argument for alternative configurations.
 ## Linters 
 
 **What is a Linter?**
+A linter is simply a tool that can be used to analyse code for programmatic or stylistic errors.
+A linter is also another form of static analysis.
+
+If you are running on a Linux bsaed OS, you can install `tflint` easily with the following curl command:
+`curl -L "$(curl -Ls https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" -o tflint.zip && unzip tflint.zip && rm tflint.zip` 
+
+After doing this, you will be able to run `tflint` in the needed DIR.
+
+Linters can pick up errors that would otherwise not be picked up by other methods of static testing.
+An example of this would be for provider specific fields/resources, this can be shown with the below example.
+
+
+```yaml
+resource "aws_instance" "testing" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t1.2xlarge" # invalid type!
+}
+```
+If we do some static testing on this code - like `terraform validate`:
+
+```
+$ terraform validate 
+Success! The configuration is valid.
+```
+
+If we run our linter: 
+```
+$ ./tflint 
+1 issue(s) found:
+
+Error: "t1.2xlarge" is an invalid value as instance_type (aws_instance_invalid_type)
+
+  on main.tf line 3:
+   3:   instance_type = "t1.2xlarge" # invalid type!
+```
+
+You can see that our linter finds the issue before having to attempt to run a `terraform plan`.
+Static testing combined with linting is a great way to test without having to create any infrastructure.
+These are ideal steps to include before committing to your SCM, and should be considered mandatory.
+
 
 **Tools:**
-**Pre-requirments:** 
+`Tflint` - https://github.com/terraform-linters/tflint
+
+**Pre-requirements:** 
+- Install `tflint`
+  
 **Links:**
+https://github.com/terraform-linters/tflint
+
 
 
 ## Security Testing
 
 **What security aspects are we looking for?** 
+There are many benefits to infrastructure as code, it can allow someone to create a complex network, spanning data centers, regions and subnets. One of the most common issues when starting to create resources in the cloud is that you expose your instances/hosts to the outside world. This is one of many security issues we want to check before deploying our code.
+
+`tfsec` is another tool we can use for static security analysis.
+If you check the `README.md` you will find that there is a large number of potential security flaws you can be alerted too, before applying and building your infrastructure. 
+
+In the below image you can see that `tfsec` find 3 sections within my code that has a fully open ingress security group.
+This is a common mistake that many make, this is partly due to the fact they have not set up correct routing to their instances.  
+
+![Security Check](assets/images/security_check.png)
+
 
 **Tools:**
-**Pre-requirments:** 
+`tfsec` - https://github.com/liamg/tfsec
+
+**Pre-requirements:** 
+- Have GO installed. Use a version that is appropriate.
+  
+```bash
+wget https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
+sudo tar -xvf go1.13.3.linux-amd64.tar.gz
+sudo mv go /usr/local
+
+# Export ENV variables (make sure you update with your own path)
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/goProjects
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+# VALIDATE WITH
+go version
+go env
+```
+
+- Install `tfsec`
+  - When go is installed you can run - `go get -u github.com/liamg/tfsec/cmd/tfsec`
+
+
+
 **Links:**
+https://github.com/liamg/tfsec
+https://golang.org/dl/
+
 
 ## Unit Testing
 
 **What is a Terraform Unit Test?**
 
 **Tools:**
-**Pre-requirments:** 
+**Pre-requirements:** 
 **Links:**
 
 
@@ -99,7 +182,7 @@ argument for alternative configurations.
 **What is a Terraform Integration Test?**
 
 **Tools:**
-**Pre-requirments:** 
+**Pre-requirements:** 
 **Links:**
 
 ## Property Testing
@@ -107,7 +190,7 @@ argument for alternative configurations.
 **What is a Property/properties Test?**
 
 **Tools:**
-**Pre-requirments:** 
+**Pre-requirements:** 
 **Links:**
 
 ## E2E Testing
@@ -115,7 +198,7 @@ argument for alternative configurations.
 E2E testing in Terraform is ......
 
 **Tools:**
-**Pre-requirments:** 
+**Pre-requirements:** 
 **Links:**
 
 --- 
