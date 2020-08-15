@@ -20,9 +20,6 @@ What are the benefits of static testing/analysis
 - Very easy to use.
 
 
-**Tools:**
-
-- Terraform.
 In our case, for our static analysis we will make use of a native Terraform command - `terraform validate`.
 This will allow for a quick check to make sure you have not made a silly mistake with spelling, missing a bracket, or what I
 believe to be more useful; checking for unused variables.
@@ -61,9 +58,11 @@ argument for alternative configurations.
 
 
 **Pre-requirements:** 
+
 - Just have TF installed.
 
 **Links:**
+
 [Terraform Validate](https://www.terraform.io/docs/commands/validate.html)
 
 
@@ -72,7 +71,8 @@ argument for alternative configurations.
 
 **What is a Linter?**
 A linter is simply a tool that can be used to analyse code for programmatic or stylistic errors.
-A linter is also another form of static analysis.
+Although a linter is also another form of static analysis, for the purposes of this document, I wanted to keep them
+separate to give an easier way to break down these sections.
 
 If you are running on a Linux bsaed OS, you can install `tflint` easily with the following curl command:
 `curl -L "$(curl -Ls https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" -o tflint.zip && unzip tflint.zip && rm tflint.zip` 
@@ -112,13 +112,12 @@ Static testing combined with linting is a great way to test without having to cr
 These are ideal steps to include before committing to your SCM, and should be considered mandatory.
 
 
-**Tools:**
-`Tflint` - https://github.com/terraform-linters/tflint
-
 **Pre-requirements:** 
+
 - Install `tflint`
   
 **Links:**
+
 https://github.com/terraform-linters/tflint
 
 
@@ -134,11 +133,11 @@ If you check the `README.md` you will find that there is a large number of poten
 In the below image you can see that `tfsec` find 3 sections within my code that has a fully open ingress security group.
 This is a common mistake that many make, this is partly due to the fact they have not set up correct routing to their instances.  
 
+Again `tfsec` is yet another form of static analysis, as aforementioned, I wanted to keep them
+separate to give an easier way to break down these sections.
+
 ![Security Check](assets/images/security_check.png)
 
-
-**Tools:**
-`tfsec` - https://github.com/liamg/tfsec
 
 **Pre-requirements:** 
 - Have GO installed. Use a version that is appropriate.
@@ -164,6 +163,7 @@ go env
 
 
 **Links:**
+
 https://github.com/liamg/tfsec
 https://golang.org/dl/
 
@@ -173,7 +173,9 @@ https://golang.org/dl/
 **What is a Terraform Unit Test?**
 
 **Tools:**
+
 **Pre-requirements:** 
+
 **Links:**
 
 
