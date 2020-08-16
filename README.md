@@ -141,16 +141,15 @@ separate to give an easier way to break down these sections.
 
 **Pre-requirements:** 
 - Have GO installed. Use a version that is appropriate.
-  
+- Make sure you have your variabes exported. Check the GOlang docs for insall info.
 ```bash
-wget https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
-sudo tar -xvf go1.13.3.linux-amd64.tar.gz
-sudo mv go /usr/local
-
 # Export ENV variables (make sure you update with your own path)
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/goProjects
+export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+# You could also update your bashrc - .profile.
+
 
 # VALIDATE WITH
 go version
@@ -172,11 +171,55 @@ https://golang.org/dl/
 
 **What is a Terraform Unit Test?**
 
+
+
 **Tools:**
+- Terratest
 
 **Pre-requirements:** 
 
+There is some go setup:
+
+GO can be a bit annoying. Many experience errors relating to path and dependency errors.
+I think after getting GO installed, you want to create projects within your GO path /src dir.
+Note: I have a terratest project and then nest my code into `test` and `tfcode` DIRs. Feel free to nest your directories 
+as you see fit.
+
+My code was nested like:
+```
+/home/ms/go/src/terratest
+└── simpleExample
+    ├── test
+    │   ├── go.mod
+    │   ├── go.sum
+    │   └── terraform_basic_example_test.go
+    └── tfcode
+        ├── main.tf
+        ├── provider.tf
+        ├── terraform.tfstate
+        ├── terraform.tfstate.backup
+        ├── terraform.tfvars
+        ├── variables.tf
+        └── versions.tf
+
+3 directories, 10 files
+```
+
+When it comes to testing you can do an init (like a `dep ensure`), then run the test:
+```
+ms@home:~/go/src/terratest/simpleExample/test$ go mod init github.com/mSm1th/terraform_testing
+go: creating new go.mod: module github.com/mSm1th/terraform_testing
+ms@home:~/go/src/terratest/simpleExample/test$ go test -v 
+```
+
+Hopefully your tests pass:
+![Tests passing](assets/images/terratest_pass.png)
+
+
 **Links:**
+- https://terratest.gruntwork.io/docs/getting-started/quick-start/
+- https://golang.org/doc/install
+
 
 
 ## Integration Testing
