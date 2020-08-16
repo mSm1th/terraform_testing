@@ -171,9 +171,36 @@ https://golang.org/dl/
 
 **What is a Terraform Unit Test?**
 
+Within Terraform, a unit test can be simplified to a Terraform module. Unit tests can be used as a way to build confidence on a small,and logical grouping of your code - a unit.
+
+The reason unit testing can be difficult in Terraform, is because Terraform is full of dependencies.
+Think about a basic usecase of creating a EC2 instance on AWS. You are using a AWS provider, you are reliant on AWS's API's.
+This is the reason that you will need to deploy your resources to test them, you cannot do this statically. This is part of a reason that many will find it hard to describe unit tests in Terraform.
+
+Many people would say that there are only integration tests in Terraform for the aforementioned reason - you are always reliant, or integrated with other units/groups of code.
+
+Good things about unit tests:
+- Still pretty quick - generally under 10 mins.
+- Mostly stable.
+- Gives a high level of confidence in an individual units.
+
+Weaknesses of unit tests:
+- You need to deploy your resources.
+- Requires you to write non-trivial code. 
+
+`Terratest` is a very popular tool that can be used to help write unit tests. 
+Terratest is a Go library that makes it easier to write automated tests for your infrastructure code. It provides a variety of helper functions and patterns for common infrastructure testing tasks.
+
+Every team can make use of unit testing with `Terratest`, it is very easy when people are early on, in their IaC journey, as you are more likely to only have a few modules that you can test.  
+
+I have provided a basic example of code that can be used within the `unit_testing` folder.
+This code will create a EC2 instance and write 'hello world' on a web server. The unit test will look for the connection and check that the body says 'Hello, World!'
+
+There is a huge about of information on Terratest - go have a look.
 
 
 **Tools:**
+
 - Terratest
 
 **Pre-requirements:** 
@@ -207,9 +234,9 @@ My code was nested like:
 
 When it comes to testing you can do an init (like a `dep ensure`), then run the test:
 ```
-ms@home:~/go/src/terratest/simpleExample/test$ go mod init github.com/mSm1th/terraform_testing
+$ go mod init github.com/mSm1th/terraform_testing
 go: creating new go.mod: module github.com/mSm1th/terraform_testing
-ms@home:~/go/src/terratest/simpleExample/test$ go test -v 
+$ go test -v 
 ```
 
 Hopefully your tests pass:
@@ -217,9 +244,9 @@ Hopefully your tests pass:
 
 
 **Links:**
+- https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction
 - https://terratest.gruntwork.io/docs/getting-started/quick-start/
 - https://golang.org/doc/install
-
 
 
 ## Integration Testing
