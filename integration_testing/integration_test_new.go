@@ -72,7 +72,7 @@ func createInstanceOpts(t *testing.T,
 			"public_key":              "/home/ms/.ssh/aws_key.pub",
 			"private_key":             "/home/ms/.ssh/aws_key",
 			"instance_type":           "t2.micro",
-			"instance_count":          "1",
+			"instance_count":          "2",
 			"subnet":                  vpcSubet,
 			"instance_security_group": vpcISG,
 			"web_app_LB":              vpcAppLb,
@@ -92,21 +92,25 @@ func validateInstance(t *testing.T, instanceOpts *terraform.Options) {
 
 	//Get the instaces output expected from the TF modules.
 	instances := terraform.OutputRequired(t, instanceOpts, "instances")
-	instanceListStrings := strings.Split(instances, ",")
+
+	r := strings.NewReplacer("\"", "", "[", "", "]", "")
+	cleanedStrings := r.Replace(instances)
+	formattedStrings := strings.TrimSpace(cleanedStrings)
+	instancesListStrings := strings.Split(formattedStrings, ",")
+
 	instanceList := map[int]string{}
 
 	// Added the string to a map that will be used for testing
-	for index, element := range instanceListStrings {
+	for index, element := range instancesListStrings {
 		instanceList[index] = element
 	}
 
 	// Iterate tests for each of the instances found
 	for key, element := range instanceList {
-		fmt.Println("Key:", key, "=>", "Instance:", element)
-		r := strings.NewReplacer("\"", "", "[", "", "]", "")
-		cleanedElement := r.Replace(element)
-		formattedElement := strings.TrimSpace(cleanedElement)
-		url := fmt.Sprintf("http://%s:80", formattedElement)
-		http_helper.HttpGetWithRetry(t, url, nil, 200, "Welcome to nginx!", 10, 10*time.Second)
+		if len(strings.TrimSpace(element)) != 0 {
+			fmt.Println("Key:", key, "=>", "Instance:", strings.TrimSpace(element))
+			url := fmt.Sprintf("http://%s:80", strings.TrimSpace(element))
+			http_helper.HttpGetWithRetry(t, url, nil, 200, "Hello, World!", 10, 10*time.Second)
+		}
 	}
 }
