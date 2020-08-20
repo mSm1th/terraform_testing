@@ -278,6 +278,15 @@ The `VPC` will be created before you provision the instances within the created 
 Therefore, the integration test would be that 
 
 
+After running our tests we would hope to see that our tests have passed:
+
+```
+TestStagingInstances 2020-08-20T22:34:52+01:00 logger.go:66: Destroy complete! Resources: 8 destroyed.
+--- PASS: TestStagingInstances (192.15s)
+PASS
+ok  	github.com/mSm1th/terraform_testing	192.151s
+```
+
 **Tools:**
 **Pre-requirements:** 
 **Links:**
