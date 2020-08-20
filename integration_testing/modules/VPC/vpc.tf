@@ -100,6 +100,13 @@ resource "aws_security_group" "terraform_instance_security_group" {
     protocol        = "tcp"
     security_groups = [aws_security_group.terraform_lb_security_group.id]
   }
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    cidr_blocks = ["${chomp(data.http.user_pub_id.body)}/32"]
+  }
+
 ## So the host can ssh if needed.
   ingress {
     description = "SSH"
