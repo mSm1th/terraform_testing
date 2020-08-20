@@ -86,13 +86,13 @@ func createHelloOpts(
 func validateHelloApp(t *testing.T, helloOpts *terraform.Options) {
 	albDnsName := terraform.OutputRequired(t, helloOpts, "alb_dns_name")
 	url := fmt.Sprintf("http://%s", albDnsName)
-
 	maxRetries := 10
 	timeBetweenRetries := 10 * time.Second
 
 	http_helper.HttpGetWithRetryWithCustomValidation(
 		t,
 		url,
+		tlsConfig,
 		maxRetries,
 		timeBetweenRetries,
 		func(status int, body string) bool {

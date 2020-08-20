@@ -1,9 +1,12 @@
+variable "region" {
+  description = "region that the VPC and other network components should be deployed into."
+}
+
 variable "public_key" {
   description = "The SSH key name."
 }
 
 variable "private_key" {
-  default     = "mykey.pem"
   description = "The private key name."
 }
 

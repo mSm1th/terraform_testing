@@ -35,7 +35,7 @@ resource "aws_instance" "web_app_instances" {
   associate_public_ip_address = true
   
   provisioner "file" {
-    source      = "files/scripts/setup.sh"
+    source      = "../../files/scripts/setup.sh"
     destination = "/tmp/setup.sh"
   }
 
