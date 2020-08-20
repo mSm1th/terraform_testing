@@ -14,7 +14,7 @@ func TestTerraformAwsHelloWorldExample(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
-		// The path to where our Terraform code is located
+		// The path to where our Terraform code is located. Note my code lives in on the GO path. SO you will need to update.
 		TerraformDir: "../examples/simpleExample",
 	}
 

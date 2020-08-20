@@ -3,6 +3,14 @@ A repo to demonstrate testing within Terraform. Within this page we will look at
 While some of these definitions may be disputed, it is important to take the value from each of the sections. 
 By doing so, you can be more confident in your code/infrastructure.
 
+Within this document I aim to quickly outline some different forms of testing your Terraform code:
+- Static testing/ analyses 
+- Linters
+- Security testing
+- Unit testing
+- Integration testing
+- Property testing
+- E2E Testing
 
 
 ## Static Testing/Analysis
@@ -252,6 +260,23 @@ Hopefully your tests pass:
 ## Integration Testing
 
 **What is a Terraform Integration Test?**
+
+Integration tests within Terraform are tests the utilise multiple modules, that work together, some of which may have dependencies on each other.
+
+What are the benefits of integration testing
+- Mostly stable (with retry logic)
+- You have a high confidence in individual units working together.
+
+**Remember - integration testing will also mean you have to provision the resources!**
+
+
+An example; you may have some code that looks to deploy instances on AWS.
+
+You create a `VPC` module as well as a `instance` module.
+The `VPC` will be created before you provision the instances within the created VPC. 
+
+Therefore, the integration test would be that 
+
 
 **Tools:**
 **Pre-requirements:** 
