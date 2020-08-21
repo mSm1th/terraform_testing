@@ -209,6 +209,7 @@ There is a huge about of information on Terratest - go have a look.
 
 **Tools:**
 
+- Terraform
 - Terratest
 
 **Pre-requirements:** 
@@ -261,11 +262,20 @@ Hopefully your tests pass:
 
 **What is a Terraform Integration Test?**
 
-Integration tests within Terraform are tests the utilise multiple modules, that work together, some of which may have dependencies on each other.
+Integration tests within Terraform are tests the utilise multiple modules that work together, some of which may have dependencies on each other.
 
-What are the benefits of integration testing
+What are the benefits of integration testing:
 - Mostly stable (with retry logic)
 - You have a high confidence in individual units working together.
+
+
+Integration tests generally go through the following stages: 
+- Apply module 1.
+- Apply module 2.
+- Run validations to make sure everything is working.
+- Destroy module 1.
+- Destroy module 2.
+
 
 **Remember - integration testing will also mean you have to provision the resources!**
 
@@ -275,8 +285,7 @@ An example; you may have some code that looks to deploy instances on AWS.
 You create a `VPC` module as well as a `instance` module.
 The `VPC` will be created before you provision the instances within the created VPC. 
 
-Therefore, the integration test would be that 
-
+Therefore, the integration test could test that the EC2 instances are reachable, and making use of VPC module information. 
 
 After running our tests we would hope to see that our tests have passed:
 
@@ -287,17 +296,85 @@ PASS
 ok  	github.com/mSm1th/terraform_testing	192.151s
 ```
 
+In this case I am not making use of stages, however, you can also create your go tests that way in order to be able to test specific
+sections as you are creating modules locally.
+
 **Tools:**
+
+- Terratest
+  
 **Pre-requirements:** 
+
+- Terraform
+- Go Installed
+
 **Links:**
+
+- https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction
+- https://terratest.gruntwork.io/docs/getting-started/quick-start/
+- https://golang.org/doc/install
+
 
 ## Property Testing
 
 **What is a Property/properties Test?**
 
+Property testing is used to inspect and validate specific properties exist on your infrastructure. You are testing if the infrastructure conforms to a particular specification. This could be that a service is running, a file has the correct permissions, etc.
+
+Most of the tools that accomplish this are making use of *domain-specific language* (DSL), as a result of this the code is pretty clear and easy to understand. The downside of property tests is that you are testing things are there, not necessarily that they work, as opposed to some of the other tests that were previously noted.
+
+I personally find that some of these tests are a lot of effort for what you get out of them.
+For example, if I am using `Kitchen`, following an extensive example you can end up with a DIR like:
+
+```
+ms@home:~/kitchenTerraform/example1$ tree
+.
+└── test
+    ├── assets
+    │   ├── aws_key
+    │   └── aws_key.pub
+    ├── fixtures
+    │   └── wrapper
+    │       ├── main.tf
+    │       ├── outputs.tf
+    │       └── variables.tf
+    ├── Gemfile
+    ├── Gemfile.lock
+    ├── integration
+    │   └── extensive_suite
+    │       ├── centos_attributes.yml
+    │       ├── controls
+    │       │   ├── inspec_attributes.rb
+    │       │   ├── operating_system.rb
+    │       │   ├── reachable_other_host.rb
+    │       │   └── state_file.rb
+    │       ├── inspec.yml
+    │       └── ubuntu_attributes.yml
+    ├── kitchen.yml
+    ├── main.tf
+    ├── outputs.tf
+    ├── test_it.sh
+    └── variables.tf
+
+7 directories, 19 files
+```
+
 **Tools:**
+
+- Kitchen Terraform
+
 **Pre-requirements:** 
+
+- Terraform
+- Ruby
+- JQ
+
 **Links:**
+
+- https://newcontext-oss.github.io/kitchen-terraform/getting_started.html
+- https://newcontext-oss.github.io/kitchen-terraform/tutorials/amazon_provider_ec2.html
+- https://newcontext-oss.github.io/kitchen-terraform/tutorials/extensive_kitchen_terraform.html
+
 
 ## E2E Testing
 
