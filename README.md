@@ -72,7 +72,7 @@ argument for alternative configurations.
 
 **Links:**
 
-[Terraform Validate](https://www.terraform.io/docs/commands/validate.html)
+- [Terraform Validate](https://www.terraform.io/docs/commands/validate.html)
 
 
 
@@ -126,7 +126,7 @@ These are ideal steps to include before committing to your SCM, and should be co
 - Install `tflint`
   
 **Links:**
-[Tflint Repo](https://github.com/terraform-linters/tflint)
+- [Tflint Repo](https://github.com/terraform-linters/tflint)
 
 
 
@@ -169,8 +169,8 @@ go env
   - When go is installed you can run - `go get -u github.com/liamg/tfsec/cmd/tfsec`
 
 **Links:**
-[Tfsec Repo](https://github.com/liamg/tfsec)
-[GoLang home](https://golang.org/dl/)
+- [Tfsec Repo](https://github.com/liamg/tfsec)
+- [GoLang home](https://golang.org/dl/)
 
 
 
@@ -253,10 +253,10 @@ Hopefully your tests pass:
 
 **Links:**
 
-[Terratest Introduction](https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction)
-[Terratest quick start](https://terratest.gruntwork.io/docs/getting-started/quick-start/)
-[GoLang Install](https://golang.org/doc/install)
-[Terratest blog post](https://blog.octo.com/en/test-your-infrastructure-code-with-terratest/)
+- [Terratest Introduction](https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction)
+- [Terratest quick start](https://terratest.gruntwork.io/docs/getting-started/quick-start/)
+- [GoLang Install](https://golang.org/doc/install)
+- [Terratest blog post](https://blog.octo.com/en/test-your-infrastructure-code-with-terratest/)
 
 
 
@@ -310,10 +310,10 @@ testing locally.
 
 **Links:**
 
-[Terratest Introduction](https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction)
-[Terratest quick start](https://terratest.gruntwork.io/docs/getting-started/quick-start/)
-[GoLang Install](https://golang.org/doc/install)
-[Terratest blog post](https://blog.octo.com/en/test-your-infrastructure-code-with-terratest/)
+- [Terratest Introduction](https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction)
+- [Terratest quick start](https://terratest.gruntwork.io/docs/getting-started/quick-start/)
+- [GoLang Install](https://golang.org/doc/install)
+- [Terratest blog post](https://blog.octo.com/en/test-your-infrastructure-code-with-terratest/)
 
 
 ## Property Testing
@@ -375,9 +375,9 @@ By making use of shell scripts. You can run a script on the host, passing in arg
 - JQ
 
 **Links:**
-[Kitchen TF get started](https://newcontext-oss.github.io/kitchen-terraform/getting_started.html)
-[Kitchen TF tutorial 1](https://newcontext-oss.github.io/kitchen-terraform/tutorials/amazon_provider_ec2.html)
-[Kitchen TF extensive tutorial](https://newcontext-oss.github.io/kitchen-terraform/tutorials/extensive_kitchen_terraform.html)
+- [Kitchen TF get started](https://newcontext-oss.github.io/kitchen-terraform/getting_started.html)
+- [Kitchen TF tutorial 1](https://newcontext-oss.github.io/kitchen-terraform/tutorials/amazon_provider_ec2.html)
+- [Kitchen TF extensive tutorial](https://newcontext-oss.github.io/kitchen-terraform/tutorials/extensive_kitchen_terraform.html)
 
 
 
