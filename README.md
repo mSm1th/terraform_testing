@@ -17,9 +17,8 @@ Within this document I aim to quickly outline some different forms of testing yo
 
 **What is Static testing?**
 
-Static testing is a software testing technique by which we can check the defects in software 
-without actually executing it. 
-
+Static testing is a software testing technique by which we can check the defects in software without actually executing it. 
+Often you can find small issues that you may have missed when eyeballing your code.
 
 What are the benefits of static testing/analysis
 - Fast.
@@ -27,15 +26,16 @@ What are the benefits of static testing/analysis
 - No need to deploy resources.
 - Very easy to use.
 
-
-In our case, for our static analysis we will make use of a native Terraform command - `terraform validate`.
+Hashicorp actually provide you with a way to perform static analysis with the command - `terraform validate`.
 This will allow for a quick check to make sure you have not made a silly mistake with spelling, missing a bracket, or what I
 believe to be more useful; checking for unused variables.
 
 All you will need to do here is run your terraform validate command in your code DIR.
-`terraform validate -json`
+`terraform validate
 
-A common example for errors that can be easily found is duplication. Within the static_analysis section I have copied some code from the TF website.
+**Note** - If you want to do something with your output text you can always format to json with - `-json`
+
+A common example for errors that can be easily found is duplication. Within the `static_analysis` section I have copied some code from the TF website.
 
 I have followed a standard of creating a `proivider.tf` file to store any provider information:
 
@@ -49,7 +49,8 @@ provider "aws" {
 }
 ```
 
-However I have also copied code that already has a provider block nested within it, and I have added that to my `main.tf` file. If I run a validate command, this is clear.
+However I have also copied code that already has a provider block nested within it, and I have added that to my `main.tf` file.
+If I run a validate command, this is clear:
 
 ```
 $ terraform validate
@@ -80,7 +81,7 @@ argument for alternative configurations.
 **What is a Linter?**
 A linter is simply a tool that can be used to analyse code for programmatic or stylistic errors.
 Although a linter is also another form of static analysis, for the purposes of this document, I wanted to keep them
-separate to give an easier way to break down these sections.
+separate to give an easier way to break down these sections. Also, it may help to keep these definitions separate for other tools or technologies. 
 
 If you are running on a Linux bsaed OS, you can install `tflint` easily with the following curl command:
 `curl -L "$(curl -Ls https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" -o tflint.zip && unzip tflint.zip && rm tflint.zip` 
@@ -125,18 +126,17 @@ These are ideal steps to include before committing to your SCM, and should be co
 - Install `tflint`
   
 **Links:**
-
-https://github.com/terraform-linters/tflint
+[Tflint Repo](https://github.com/terraform-linters/tflint)
 
 
 
 ## Security Testing
 
 **What security aspects are we looking for?** 
-There are many benefits to infrastructure as code, it can allow someone to create a complex network, spanning data centers, regions and subnets. One of the most common issues when starting to create resources in the cloud is that you expose your instances/hosts to the outside world. This is one of many security issues we want to check before deploying our code.
+There are many benefits to infrastructure as code, it can allow someone to create a complex network, spanning data centers, regions and subnets in the cloud. One of the most common issues when starting to create resources in the cloud, is that you expose your instances/hosts to the outside world. This is one of many security issues we want to check before deploying our code.
 
 `tfsec` is another tool we can use for static security analysis.
-If you check the `README.md` you will find that there is a large number of potential security flaws you can be alerted too, before applying and building your infrastructure. 
+If you check the `README.md` of the tfsec github repo,  you will find that there is a large number of potential security flaws you can be alerted too, before applying and building your infrastructure. 
 
 In the below image you can see that `tfsec` find 3 sections within my code that has a fully open ingress security group.
 This is a common mistake that many make, this is partly due to the fact they have not set up correct routing to their instances.  
@@ -150,6 +150,7 @@ separate to give an easier way to break down these sections.
 **Pre-requirements:** 
 - Have GO installed. Use a version that is appropriate.
 - Make sure you have your variabes exported. Check the GOlang docs for insall info.
+
 ```bash
 # Export ENV variables (make sure you update with your own path)
 export GOROOT=/usr/local/go
@@ -167,19 +168,18 @@ go env
 - Install `tfsec`
   - When go is installed you can run - `go get -u github.com/liamg/tfsec/cmd/tfsec`
 
-
-
 **Links:**
+[Tfsec Repo](https://github.com/liamg/tfsec)
+[GoLang home](https://golang.org/dl/)
 
-https://github.com/liamg/tfsec
-https://golang.org/dl/
 
 
 ## Unit Testing
 
 **What is a Terraform Unit Test?**
 
-Within Terraform, a unit test can be simplified to a Terraform module. Unit tests can be used as a way to build confidence on a small,and logical grouping of your code - a unit.
+Within Terraform, a unit test can be simplified to a Terraform module. 
+Unit tests can be used as a way to build confidence on a small, and logical grouping of your code - a unit.
 
 The reason unit testing can be difficult in Terraform, is because Terraform is full of dependencies.
 Think about a basic usecase of creating a EC2 instance on AWS. You are using a AWS provider, you are reliant on AWS's API's.
@@ -199,13 +199,12 @@ Weaknesses of unit tests:
 `Terratest` is a very popular tool that can be used to help write unit tests. 
 Terratest is a Go library that makes it easier to write automated tests for your infrastructure code. It provides a variety of helper functions and patterns for common infrastructure testing tasks.
 
-Every team can make use of unit testing with `Terratest`, it is very easy when people are early on, in their IaC journey, as you are more likely to only have a few modules that you can test.  
+Every team can make use of unit testing with `Terratest`, it is very easy when people are early on in their IaC journey, as you are more likely to only have a few modules that you can test.  
 
 I have provided a basic example of code that can be used within the `unit_testing` folder.
 This code will create a EC2 instance and write 'hello world' on a web server. The unit test will look for the connection and check that the body says 'Hello, World!'
 
 There is a huge about of information on Terratest - go have a look.
-
 
 **Tools:**
 
@@ -218,7 +217,7 @@ There is some go setup:
 
 GO can be a bit annoying. Many experience errors relating to path and dependency errors.
 I think after getting GO installed, you want to create projects within your GO path /src dir.
-Note: I have a terratest project and then nest my code into `test` and `tfcode` DIRs. Feel free to nest your directories 
+**Note**: I have a terratest project and then nest my code into `test` and `tfcode` DIRs. Feel free to nest your directories 
 as you see fit.
 
 My code was nested like:
@@ -253,9 +252,12 @@ Hopefully your tests pass:
 
 
 **Links:**
-- https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction
-- https://terratest.gruntwork.io/docs/getting-started/quick-start/
-- https://golang.org/doc/install
+
+[Terratest Introduction](https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction)
+[Terratest quick start](https://terratest.gruntwork.io/docs/getting-started/quick-start/)
+[GoLang Install](https://golang.org/doc/install)
+[Terratest blog post](https://blog.octo.com/en/test-your-infrastructure-code-with-terratest/)
+
 
 
 ## Integration Testing
@@ -269,7 +271,7 @@ What are the benefits of integration testing:
 - You have a high confidence in individual units working together.
 
 
-Integration tests generally go through the following stages: 
+Integration tests generally go through the following stages (imagine you have two modules): 
 - Apply module 1.
 - Apply module 2.
 - Run validations to make sure everything is working.
@@ -284,8 +286,7 @@ An example; you may have some code that looks to deploy instances on AWS.
 
 You create a `VPC` module as well as a `instance` module.
 The `VPC` will be created before you provision the instances within the created VPC. 
-
-Therefore, the integration test could test that the EC2 instances are reachable, and making use of VPC module information. 
+Therefore, the integration test could test that the EC2 instances are reachable, and making use of VPC module. 
 
 After running our tests we would hope to see that our tests have passed:
 
@@ -295,9 +296,8 @@ TestStagingInstances 2020-08-20T22:34:52+01:00 logger.go:66: Destroy complete! R
 PASS
 ok  	github.com/mSm1th/terraform_testing	192.151s
 ```
-
-In this case I am not making use of stages, however, you can also create your go tests that way in order to be able to test specific
-sections as you are creating modules locally.
+When writing integration test with `Terratest` you have the option to write code in stages. This allows for more flexibility when
+testing locally.
 
 **Tools:**
 
@@ -310,9 +310,10 @@ sections as you are creating modules locally.
 
 **Links:**
 
-- https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction
-- https://terratest.gruntwork.io/docs/getting-started/quick-start/
-- https://golang.org/doc/install
+[Terratest Introduction](https://terratest.gruntwork.io/docs/getting-started/introduction/#introduction)
+[Terratest quick start](https://terratest.gruntwork.io/docs/getting-started/quick-start/)
+[GoLang Install](https://golang.org/doc/install)
+[Terratest blog post](https://blog.octo.com/en/test-your-infrastructure-code-with-terratest/)
 
 
 ## Property Testing
@@ -359,9 +360,13 @@ ms@home:~/kitchenTerraform/example1$ tree
 7 directories, 19 files
 ```
 
+Another interesting point is that you can actually use `Terratest` to do property testing as well.
+By making use of shell scripts. You can run a script on the host, passing in args if you wish and check the return code of the script. This can make it easy if a team was doing testing by scripts before looking into Terratest or similar tools.
+
 **Tools:**
 
 - Kitchen Terraform
+- Terratest
 
 **Pre-requirements:** 
 
@@ -385,3 +390,16 @@ E2E testing in Terraform is ......
 **Links:**
 
 --- 
+
+
+
+## Other thoughts
+
+There is lots of things to look into to test, a lot of the way people tests comes down to the scale and criticality of what they are building. If it is small sections of infrastructure or basic apps on the cloud, people may just eyeball code and run a `terraform validate` against the code.
+
+It may be a good idea to run your tests in a container for consistency and easy clear up.
+
+There are lots of articles that you can have a quick read over to give you some more ideas:
+- https://www.contino.io/insights/top-3-terraform-testing-strategies-for-ultra-reliable-infrastructure-as-code
+- https://medium.com/deliveredtechnologies/unit-testing-terraform-e592a5c3777f
+  

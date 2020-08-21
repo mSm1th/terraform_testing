@@ -27,6 +27,11 @@ func TestTerraformAwsHelloWorldExample(t *testing.T) {
 	// Run `terraform output` to get the IP of the instance
 	publicIp := terraform.Output(t, terraformOptions, "public_ip")
 
+	//If you wanted to test for specific values you can make use of the assert method:
+	// assert.Equal(t, <variable>, <output_variable>)
+	//Check that a subnet is private:
+	// assert.False(t, aws.IsPublicSubnet(t, <output_subnet_var>, <region_variable>))
+
 	// Make an HTTP request to the instance and make sure we get back a 200 OK with the body "Hello, World!"
 	url := fmt.Sprintf("http://%s:8080", publicIp)
 	http_helper.HttpGetWithRetry(t, url, nil, 200, "Hello, World!", 30, 5*time.Second)
