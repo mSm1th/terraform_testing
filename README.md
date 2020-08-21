@@ -375,10 +375,10 @@ By making use of shell scripts. You can run a script on the host, passing in arg
 - JQ
 
 **Links:**
+[Kitchen TF get started](https://newcontext-oss.github.io/kitchen-terraform/getting_started.html)
+[Kitchen TF tutorial 1](https://newcontext-oss.github.io/kitchen-terraform/tutorials/amazon_provider_ec2.html)
+[Kitchen TF extensive tutorial](https://newcontext-oss.github.io/kitchen-terraform/tutorials/extensive_kitchen_terraform.html)
 
-- https://newcontext-oss.github.io/kitchen-terraform/getting_started.html
-- https://newcontext-oss.github.io/kitchen-terraform/tutorials/amazon_provider_ec2.html
-- https://newcontext-oss.github.io/kitchen-terraform/tutorials/extensive_kitchen_terraform.html
 
 
 ## E2E Testing
