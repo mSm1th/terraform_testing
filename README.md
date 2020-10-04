@@ -12,6 +12,6 @@ Within this document I aim to quickly outline some different forms of testing yo
 - Property testing
 - E2E Testing
 
-I have wrote all the information on this within a Medium artical found at - <TBC>
+I have wrote all the information on this within a Medium artical found at - https://medium.com/@martyn.ej.smith/a-jump-start-on-terraform-testing-295522cdb407
   
   
